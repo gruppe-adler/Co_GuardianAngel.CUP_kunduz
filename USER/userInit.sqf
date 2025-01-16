@@ -6,41 +6,6 @@
 
 if (hasInterface) then {
 
-    private _objectiveMarker3 = [
-        "mrk_objective3_1",
-        "mrk_objective3_2",
-        "mrk_objective3_3",
-        "mrk_objective3_4",
-        "mrk_objective3_5",
-        "mrk_objective3_6",
-        "mrk_objective3_7",
-        "mrk_objective3_8",
-        "mrk_objective3_9"
-    ];
-
-    // set marker alpha to 1 (zeus)
-    [{
-        !isNil "mrk_objective3_active"
-    }, {
-        private _markers = _this;
-        {
-            _x setMarkerAlphaLocal 1;
-        } forEach _markers;
-    }, _objectiveMarker3] call CBA_fnc_waitUntilAndExecute;
-
-
-    // set marker alpha to 1 (zeus)
-    [{
-        !isNil "mrk_objective4_active"
-    }, {
-        private _markers = _this;
-        
-        "mrk_objective4_1" setMarkerAlphaLocal 1;
-        "mrk_objective4_2" setMarkerAlphaLocal 0.2;
-    }, []] call CBA_fnc_waitUntilAndExecute;
-
-
-
     if (!weaponLowered player) then {
         player action ["WeaponOnBack", player];
     };
