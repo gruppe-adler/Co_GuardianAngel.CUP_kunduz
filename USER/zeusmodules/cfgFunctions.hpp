@@ -10,7 +10,7 @@ class grad_zeusmodules {
         class curatorShowFeedbackMessage;
         class createChairCircle;
         class getPosInCircle;
-        class spawnIEDtruck;
         class createGroupIEDworkshop;
+        class addHiddenIED;
     };
 };

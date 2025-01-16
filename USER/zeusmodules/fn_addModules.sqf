@@ -55,14 +55,14 @@
   } forEach allCurators;
 };
 
-["Evening Light - Enemies Cloaked", "Reinforcements Squad", {
+["Guardian Angel - Enemies Cloaked", "Reinforcements Squad", {
      params ["_position", "_object"];
      
      ["squad", true, ASLtoAGL _position] remoteExec ["grad_zeusmodules_fnc_reinforcements", 2];
      
 }] call zen_custom_modules_fnc_register;
 
-["Evening Light - Enemies Open", "Reinforcements Squad", {
+["Guardian Angel - Enemies Open", "Reinforcements Squad", {
      params ["_position", "_object"];
      
      ["squad", false, ASLtoAGL _position] remoteExec ["grad_zeusmodules_fnc_reinforcements", 2];
@@ -70,14 +70,14 @@
 }] call zen_custom_modules_fnc_register;
 
 
-["Evening Light - Enemies Cloaked", "Reinforcements Fireteam", {
+["Guardian Angel - Enemies Cloaked", "Reinforcements Fireteam", {
      params ["_position", "_object"];
      
      ["fireteam", true, ASLtoAGL _position] remoteExec ["grad_zeusmodules_fnc_reinforcements", 2];
      
 }] call zen_custom_modules_fnc_register;
 
-["Evening Light - Enemies Open", "Reinforcements Fireteam", {
+["Guardian Angel - Enemies Open", "Reinforcements Fireteam", {
      params ["_position", "_object"];
      
      ["fireteam", false, ASLtoAGL _position] remoteExec ["grad_zeusmodules_fnc_reinforcements", 2];
@@ -85,14 +85,14 @@
 }] call zen_custom_modules_fnc_register;
 
 
-["Evening Light - Enemies Cloaked", "Reinforcements specialteam", {
+["Guardian Angel - Enemies Cloaked", "Reinforcements specialteam", {
      params ["_position", "_object"];
      
      ["specialteam", true, ASLtoAGL _position] remoteExec ["grad_zeusmodules_fnc_reinforcements", 2];
      
 }] call zen_custom_modules_fnc_register;
 
-["Evening Light - Enemies Open", "Reinforcements specialteam", {
+["Guardian Angel - Enemies Open", "Reinforcements specialteam", {
      params ["_position", "_object"];
      
      ["specialteam", false, ASLtoAGL _position] remoteExec ["grad_zeusmodules_fnc_reinforcements", 2];
@@ -100,14 +100,14 @@
 }] call zen_custom_modules_fnc_register;
 
 
-["Evening Light - Enemies Cloaked", "Reinforcements heavy", {
+["Guardian Angel - Enemies Cloaked", "Reinforcements heavy", {
      params ["_position", "_object"];
      
      ["heavy", true, ASLtoAGL _position] remoteExec ["grad_zeusmodules_fnc_reinforcements", 2];
      
 }] call zen_custom_modules_fnc_register;
 
-["Evening Light - Enemies Open", "Reinforcements heavy", {
+["Guardian Angel - Enemies Open", "Reinforcements heavy", {
      params ["_position", "_object"];
      
      ["heavy", false, ASLtoAGL _position] remoteExec ["grad_zeusmodules_fnc_reinforcements", 2];
@@ -116,7 +116,7 @@
 
 
 
-["Evening Light - GRAD Leavenotes", "Spawn Note", {
+["Guardian Angel - GRAD Leavenotes", "Spawn Note", {
           params ["_modulePosition"]; 
           private _position = ASLtoAGL _modulePosition;
 
@@ -130,7 +130,7 @@
 ] call zen_custom_modules_fnc_register;
 
 
-["Evening Light - Hooker", "Spawn Hooker", {
+["Guardian Angel - Hooker", "Spawn Hooker", {
           params ["_modulePosition"]; 
           private _position = ASLtoAGL _modulePosition;
           
@@ -138,58 +138,30 @@
      }
 ] call zen_custom_modules_fnc_register;
 
-["Evening Light - Abu Ben Zeen", "Spawn Abu", {
-          params ["_modulePosition"]; 
-          private _position = ASLtoAGL _modulePosition;
-          
-          [_position] remoteExec ["grad_zeusmodules_fnc_createAbuBenZeen", 2];
-     }
-] call zen_custom_modules_fnc_register;
 
-["Evening Light - Objectivemarker", "Show Objective 2 (Taliban FOB)", {
-          params ["_modulePosition"]; 
-          private _position = ASLtoAGL _modulePosition;
-          
-          mrk_objective3_active = true;
-          publicVariable "mrk_objective3_active";
-     }
-] call zen_custom_modules_fnc_register;
+["Guardian Angel - IED Workshop", "Add hidden IED to vehicle", {
+          params ["_modulePosition", "_vehicle"];
 
-["Evening Light - Objectivemarker", "Show Objective 3 (Ben Zeen)", {
-          params ["_modulePosition"]; 
-          private _position = ASLtoAGL _modulePosition;
-          
-          mrk_objective4_active = true;
-          publicVariable "mrk_objective4_active";
-     }
-] call zen_custom_modules_fnc_register;
-
-["Evening Light - IED Workshop", "Spawn IED Truck", {
-          params ["_modulePosition"]; 
-          private _position = ASLtoAGL _modulePosition;
-          
-          [_position] remoteExec ["grad_zeusmodules_fnc_spawnIEDtruck", 2];
-     }
-] call zen_custom_modules_fnc_register;
-
-["Evening Light - IED Workshop", "Spawn Defender Group", {
-          params ["_modulePosition"]; 
-          
-          [] remoteExec ["grad_zeusmodules_fnc_createGroupIEDworkshop", 2];
+          if (_vehicle iskindof "LandVehicle") then {
+               "IED added" call CBA_fnc_notify;
+               [_vehicle] remoteExec ["grad_zeusmodules_fnc_addHiddenIED", 2];
+          } else {
+               "Not a vehicle" call CBA_fnc_notify;
+          };              
      }
 ] call zen_custom_modules_fnc_register;
 
 
 
 
-["Evening Light - Captive", "Start Screaming", {
+["Guardian Angel - Captive", "Start Screaming", {
      params ["_position", "_object"];
      
      call grad_captive_fnc_yellStuff;
      
 }] call zen_custom_modules_fnc_register;
 
-["Evening Light - Captive", "Stop Screaming", {
+["Guardian Angel - Captive", "Stop Screaming", {
      params ["_position", "_object"];
      
      if (!isNull captive_compound2) then {
@@ -200,7 +172,7 @@
 
 
 
-["Evening Light - Ambient", "Music Radio",
+["Guardian Angel - Ambient", "Music Radio",
     {
       // Get all the passed parameters
       params ["_position", "_object"];
@@ -220,7 +192,7 @@
     }] call zen_custom_modules_fnc_register;
 
 
-["Evening Light - Ambient", "Suicide Car Spawn",
+["Guardian Angel - Ambient", "Suicide Car Spawn",
     {
       params ["_position", "_object"];
       _position = ASLToAGL _position;
@@ -230,7 +202,7 @@
     }] call zen_custom_modules_fnc_register;
 
 
-["Evening Light - Ambient", "Create Mosque Singer",
+["Guardian Angel - Ambient", "Create Mosque Singer",
     {
       params ["_position", "_object"];
       _position = ASLToAGL _position;
@@ -239,7 +211,7 @@
 
     }] call zen_custom_modules_fnc_register;
 
-["Evening Light - Ambient", "Shoot Flare",
+["Guardian Angel - Ambient", "Shoot Flare",
     {
       params ["_position", "_object"];
       _position = ASLToAGL _position;
@@ -253,7 +225,7 @@
 
     
 
-["Evening Light - End", "Create Chair Circle",
+["Guardian Angel - End", "Create Chair Circle",
 {
   params [["_position", [0,0,0], [[]], 3], ["_objectUnderCursor", objNull, [objNull]]];
 
@@ -262,7 +234,7 @@
 
 }] call zen_custom_modules_fnc_register;
 
-["Evening Light - FX", "Create Monsoon",
+["Guardian Angel - FX", "Create Monsoon",
 {
   params [["_position", [0,0,0], [[]], 3], ["_objectUnderCursor", objNull, [objNull]]];
 
@@ -271,7 +243,7 @@
 }] call zen_custom_modules_fnc_register;
 
 
-["Evening Light - FX", "End Monsoon",
+["Guardian Angel - FX", "End Monsoon",
 {
   params [["_position", [0,0,0], [[]], 3], ["_objectUnderCursor", objNull, [objNull]]];
 
