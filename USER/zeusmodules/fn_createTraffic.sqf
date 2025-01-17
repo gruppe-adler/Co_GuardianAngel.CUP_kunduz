@@ -30,7 +30,10 @@ private _classname = selectRandom [
 	"UK3CB_TKC_C_Skoda",
 	"UK3CB_TKC_C_UAZ_Closed",
 	"UK3CB_TKC_C_Ural_Open",
-	"UK3CB_TKC_C_Ural_Repair"
+	"UK3CB_TKC_C_Ural_Repair",
+	"gm_ge_civ_w123",
+	"gm_ge_civ_w123",
+	"gm_ge_civ_typ251"
 ];
 
 private _path = call grad_zeusmodules_fnc_trafficpath_1;
@@ -44,13 +47,26 @@ private _dir = _firstPathPos getDir _secondPathPos;
 private _vehicle = createVehicle [_classname, _firstPathPos, [], 0, "NONE" ];
 _vehicle setDir _dir;
 private _crew = createVehicleCrew _vehicle;
+_vehicle forceFollowRoad true;
 
-_vehicle setDriveOnPath _path;
+{
+	_x setVariable ["lambs_danger_disableAI", true, true];
+	_x setBehaviour "CARELESS";
+	
+} forEach units _crew;
+doStop _vehicle;
+
+[{
+	params ["_vehicle", "_path"];
+	_vehicle setDriveOnPath _path;
+	
+}, [_vehicle, _path], 3] call cba_fnc_waitandexecute;
+
 
 
 private _existingTraffic = missionNamespace getVariable ["grad_traffic", []];
 _existingTraffic pushBackUnique _vehicle;
-missionNamespace getVariable ["grad_traffic", _existingTraffic, true];
+missionNamespace setVariable ["grad_traffic", _existingTraffic, true];
 
 
 [{
@@ -59,69 +75,63 @@ missionNamespace getVariable ["grad_traffic", _existingTraffic, true];
 
 	// Parameters
 	private _coneDistance = 50;                 // Distance of the cone
-	private _coneAngle = 30;                    // Half-angle of the cone (in degrees)
+	private _coneAngle = 90;                    // Half-angle of the cone (in degrees)
 	private _existingTraffic = missionNamespace getVariable ["grad_traffic", []];
-
+	
 	// Get the direction of the cone
-	private _coneDir = (vectorNormalized (vectorDir _vehicle));
-
-	// debug cone
-	[_vehicle, _coneDir, _coneAngle] call grad_traffic_debug;
+	private _coneDir = getDir _vehicle;
+	private _objPos = getPos _vehicle;
+	private _posInFront = _objPos getPos [20, _coneDir];
 
 	// Filter objects within the cone
 	private _objectsInCone = _existingTraffic select {
-		private _objPos = getPosATL _x;
-		private _objVector = _objPos vectorFromTo (getPosATL _vehicle); // Vector to object
-		private _objDir = vectorNormalized _objVector;                 // Normalized direction
-		private _angle = acos (_coneDir vectorDotProduct _objDir);    // Angle between vectors (in radians)
-
-		// Convert cone angle to radians and check
-		(_angle <= (_coneAngle * 0.0174533)) // (degrees to radians)
+		(_x inArea [_posInFront, _coneDistance, 5, _coneDir, true, 10])
 	};
 
-	if (count _objectsInCone > 0 || _vehicle getVariable ["grad_traffic_stopped", false]) then {
-		_vehicle limitSpeed 0;
+	private _foundVehicles = count _objectsInCone > 0;
+	// debug cone
+	// [_vehicle, _posInFront, _coneAngle, _coneDistance, _foundVehicles] call grad_traffic_debug;
+
+	if ((count _objectsInCone) > 0 || _vehicle getVariable ["grad_traffic_stopped", false]) then {
+		_vehicle limitSpeed 0.001;
 	} else {
-		_vehicle limitSpeed 100;
+		if (_vehicle distance controlPoint < 150) then {
+			_vehicle limitSpeed ((_vehicle distance _controlPoint) / 2);
+		} else {
+			_vehicle limitSpeed 70;
+		};
 	};
 
-}, 0, [_vehicle]] call CBA_fnc_addPerFrameHandler;
-
-
-// Function to rotate a vector by an angle
-private _rotateVector = {
-	params ["_vector", "_angleDeg"];
-	private _angleRad = _angleDeg * 0.0174533; // Convert to radians
-	private _cosA = cos _angleRad;
-	private _sinA = sin _angleRad;
-
-	// Rotate vector in 2D (assuming Z is up)
-	[
-		(_vector select 0) * _cosA - (_vector select 1) * _sinA,
-		(_vector select 0) * _sinA + (_vector select 1) * _cosA,
-		0
-	]
-};
+}, 0.5, [_vehicle]] call CBA_fnc_addPerFrameHandler;
 
 
 grad_traffic_debug = {
-	params ["_vehicle", ];
+	params ["_vehicle", "_posInFront", "_coneAngle", "_coneDistance", "_foundVehicles"];
 
-	// Calculate cone boundary vectors
-	private _leftBoundary = [_coneDir, -_coneAngle] call _rotateVector; // Rotate left
-	private _rightBoundary = [_coneDir, _coneAngle] call _rotateVector; // Rotate right
+	// Parameters
+	private _width = 5;                                    // Half-width of the rectangle
+	private _coneDir = vectorNormalized vectorDir _vehicle; // Normalize the cone direction
+	private _coneColor = if (_foundVehicles) then { [1, 0, 0, 1] } else { [0, 1, 0, 1] };
 
-	// Extend boundaries to the cone distance
-	private _leftEnd = _originPos vectorAdd (_leftBoundary vectorMultiply _coneDistance);
-	private _rightEnd = _originPos vectorAdd (_rightBoundary vectorMultiply _coneDistance);
-	private _forwardEnd = _originPos vectorAdd (_coneDir vectorMultiply _coneDistance);
+	// Calculate perpendicular vector
+	private _perpendicular = _coneDir vectorCrossProduct (vectorUp _vehicle);
+
+	// Debug: Log cone direction and perpendicular vector
+	diag_log format ["Normalized Cone Direction: %1", _coneDir];
+	diag_log format ["Perpendicular Vector: %1", _perpendicular];
+
+	// Calculate rectangle corners
+	private _topLeft = _posInFront vectorAdd ((_coneDir vectorMultiply (_coneDistance / 2)) vectorAdd (_perpendicular vectorMultiply _width));
+	private _topRight = _posInFront vectorAdd ((_coneDir vectorMultiply (_coneDistance / 2)) vectorAdd (_perpendicular vectorMultiply -_width));
+	private _bottomLeft = _posInFront vectorAdd ((_coneDir vectorMultiply -(_coneDistance / 2)) vectorAdd (_perpendicular vectorMultiply _width));
+	private _bottomRight = _posInFront vectorAdd ((_coneDir vectorMultiply -(_coneDistance / 2)) vectorAdd (_perpendicular vectorMultiply -_width));
+
+	// Debug: Log rectangle corners
+	diag_log format ["TopLeft: %1, TopRight: %2, BottomLeft: %3, BottomRight: %4", _topLeft, _topRight, _bottomLeft, _bottomRight];
 
 	// Draw debug lines
-	drawLine3D [_originPos, _leftEnd, _coneColor];   // Left boundary
-	drawLine3D [_originPos, _rightEnd, _coneColor];  // Right boundary
-	drawLine3D [_originPos, _forwardEnd, _coneColor];// Forward line
-
-	// Optional: Draw connecting lines for better visualization
-	drawLine3D [_leftEnd, _forwardEnd, _coneColor];  // Left to forward
-	drawLine3D [_rightEnd, _forwardEnd, _coneColor]; // Right to forward
+	drawLine3D [_topLeft, _topRight, _coneColor, 10];    // Top edge
+	drawLine3D [_bottomLeft, _bottomRight, _coneColor, 10]; // Bottom edge
+	drawLine3D [_topLeft, _bottomLeft, _coneColor, 10];  // Left edge
+	drawLine3D [_topRight, _bottomRight, _coneColor, 10]; // Right edge
 };

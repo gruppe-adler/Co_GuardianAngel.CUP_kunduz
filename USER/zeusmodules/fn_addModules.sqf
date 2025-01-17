@@ -20,7 +20,7 @@
               _x setSkill ["commanding", 1];
               _x setSkill ["general", 1];
 
-              _x addGoggles "CUP_Beard_Black";
+              _x addGoggles "fsob_Beard01_Dark";
           } forEach units _group;
 
           ["GRAD_missionControl_setServerAsOwner", [_group]] call CBA_fnc_serverEvent;
@@ -54,6 +54,23 @@
 
   } forEach allCurators;
 };
+
+
+["Guardian Angel - Mission Progress", "Blufor Convoy Spawn", {
+     params ["_position", "_object"];
+     
+     missionNameSpace setVariable ["grad_blufor_convoy", true, true];
+     
+}] call zen_custom_modules_fnc_register;
+
+["Guardian Angel - Mission Progress", "Spawn Blufor Victim", {
+     params ["_position", "_object"];
+     
+     private _agl = ASLtoAGL _position;
+     [_agl] remoteExec ["grad_zeusmodules_fnc_spawnVictim", 2];
+     
+}] call zen_custom_modules_fnc_register;
+
 
 ["Guardian Angel - Enemies Cloaked", "Reinforcements Squad", {
      params ["_position", "_object"];
