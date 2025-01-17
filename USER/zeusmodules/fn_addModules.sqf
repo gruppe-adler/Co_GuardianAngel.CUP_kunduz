@@ -138,6 +138,14 @@
      }
 ] call zen_custom_modules_fnc_register;
 
+["Guardian Angel - Traffic", "Spawn traffic", {
+          params ["_modulePosition", "_vehicle"];
+
+          "Traffic spawned" call CBA_fnc_notify;
+          [_vehicle] remoteExec ["grad_zeusmodules_fnc_createTraffic", 2];
+     }
+] call zen_custom_modules_fnc_register;
+
 
 ["Guardian Angel - IED Workshop", "Add hidden IED to vehicle", {
           params ["_modulePosition", "_vehicle"];

@@ -12,5 +12,7 @@ class grad_zeusmodules {
         class getPosInCircle;
         class createGroupIEDworkshop;
         class addHiddenIED;
+        class createTraffic;
+        class trafficpath_1;
     };
 };
