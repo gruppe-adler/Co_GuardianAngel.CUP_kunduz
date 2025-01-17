@@ -14,5 +14,6 @@ class grad_zeusmodules {
         class addHiddenIED;
         class createTraffic;
         class trafficpath_1;
+        class trafficControl { postInit = 1; };
     };
 };
