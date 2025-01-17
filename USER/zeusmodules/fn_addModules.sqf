@@ -63,6 +63,21 @@
      
 }] call zen_custom_modules_fnc_register;
 
+["Guardian Angel - Mission Progress", "Civ Convoy 1 Spawn", {
+     params ["_position", "_object"];
+     
+     missionNameSpace setVariable ["grad_civ_convoy_1", true, true];
+     
+}] call zen_custom_modules_fnc_register;
+
+["Guardian Angel - Mission Progress", "Civ Convoy 2 Spawn", {
+     params ["_position", "_object"];
+     
+     missionNameSpace setVariable ["grad_civ_convoy_2", true, true];
+     
+}] call zen_custom_modules_fnc_register;
+
+
 ["Guardian Angel - Mission Progress", "Spawn Blufor Victim", {
      params ["_position", "_object"];
      
@@ -147,13 +162,6 @@
 ] call zen_custom_modules_fnc_register;
 
 
-["Guardian Angel - Hooker", "Spawn Hooker", {
-          params ["_modulePosition"]; 
-          private _position = ASLtoAGL _modulePosition;
-          
-          [_position] remoteExec ["grad_SR_fnc_hooker_spawn", 2];
-     }
-] call zen_custom_modules_fnc_register;
 
 ["Guardian Angel - Traffic", "Spawn traffic", {
           params ["_modulePosition", "_vehicle"];
