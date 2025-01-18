@@ -112,8 +112,9 @@ private _spawnIndexContainer = 0;
 			_unitsFound set [_index, _x];
 
 			if (_index == 0) then {
-				private _source = createSoundSource [(selectRandom ["music1", "music2", "arabicsong1", "arabicsong2"]), _position, [], 0];
-      			[_source, _x, false] call grad_ambient_fnc_soundSourceHelper;
+				private _music = selectRandom ["music1", "music2", "arabicsong1", "arabicsong2"];
+				private _source = createSoundSource [_music, getPos _x, [], 0];
+      			[_source, _music, _x, false] call grad_ambient_fnc_soundSourceHelper;
 			};
 		};
 	} forEach _objects;
@@ -159,11 +160,6 @@ private _spawnIndexContainer = 0;
 		private _index = _x getVariable ["grad_convoy_index", -1];
 		if (_index > -1) then {
 			_unitsFound set [_index, _x];
-
-			if (_index == 0) then {
-				// private _source = createSoundSource [(selectRandom ["music1", "music2", "arabicsong1", "arabicsong2"]), _position, [], 0];
-      			// [_source, _x, false] call grad_ambient_fnc_soundSourceHelper;
-			};
 		};
 	} forEach _objects;
 

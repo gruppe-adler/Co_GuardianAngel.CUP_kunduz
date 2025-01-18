@@ -29,9 +29,9 @@ if (count _minarets > 0) then {
 
         _unit setDir ((_unit getDir _minaret) - 180);
 
-
-        private _source = createSoundSource ["prayer2", getPos _unit, [], 0];
-        [_source, _unit, false] call grad_ambient_fnc_soundSourceHelper;
+        private _music = "prayer2";
+        private _source = createSoundSource [_music, getPos _unit, [], 0];
+        [_source, _music, _unit, false] call grad_ambient_fnc_soundSourceHelper;
 
         [_unit, "Acts_JetsMarshallingStop_loop"] remoteExec ["switchMove"];
 

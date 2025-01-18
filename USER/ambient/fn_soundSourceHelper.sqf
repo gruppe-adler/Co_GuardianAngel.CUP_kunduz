@@ -1,4 +1,4 @@
-params ["_source", "_positionOrObject", ["_createDummy", true]];
+params ["_source", "_sound", "_positionOrObject", ["_createDummy", true]];
 
 private _posFinal = _positionOrObject;
 
@@ -17,6 +17,12 @@ if (_createDummy) then {
 } else {
     _helper setVariable ["soundSource", _source, true];
 };
+
+_positionOrObject setVariable ["grad_music_child", _helper, true];
+_helper setVariable ["grad_music_parent", _positionOrObject, true];
+_positionOrObject setVariable ["grad_music", _sound, true];
+_positionOrObject setVariable ["grad_music_active", true, true];
+
 
 {
     _x addCuratorEditableObjects [[_helper], false];
@@ -37,17 +43,19 @@ if (!_createDummy) then {
 
     [{
         params ["_args", "_handle"];
-        _args params ["_positionOrObject", "_source"];
+        _args params ["_helper", "_positionOrObject", "_source"];
 
-        if (isNull _source) exitWith {
+        if (isNull _helper || !alive _helper) exitWith {
             [_handle] call CBA_fnc_removePerFrameHandler;
         };
 
-        // systemChat ("move sound pos to " + str _positionOrObject);
+        // we cant be sure the source is not toggled off atm
+        private _source = _helper getVariable ["soundSource", objNull];
+        if (!isNull _source) then {
+            _source setPos getPos _positionOrObject;
+        };
 
-        _source setPos getPos _positionOrObject;
-
-    },0.5,[_positionOrObject, _source]] call CBA_fnc_addPerFrameHandler;
+    },0.5,[_helper, _positionOrObject, _source]] call CBA_fnc_addPerFrameHandler;
 };
 
 _helper

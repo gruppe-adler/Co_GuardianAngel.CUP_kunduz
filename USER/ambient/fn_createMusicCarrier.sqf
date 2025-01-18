@@ -20,4 +20,4 @@ private _music = selectRandom [
 
 
 private _source = createSoundSource [_music, _position, [], 0];
-[_source, _radio, false] call grad_ambient_fnc_soundSourceHelper;
+[_source, _music, _radio, false] call grad_ambient_fnc_soundSourceHelper;

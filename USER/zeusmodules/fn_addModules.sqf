@@ -215,8 +215,9 @@
       _radio setPos _position;
       _radio setDir (random 360);
 
-      private _source = createSoundSource [(selectRandom ["music1", "music2", "arabicsong1", "arabicsong2"]), _position, [], 0];
-      [_source, _radio, false] call grad_ambient_fnc_soundSourceHelper;
+      private _music = (selectRandom ["music1", "music2", "arabicsong1", "arabicsong2"]);
+      private _source = createSoundSource [_music, _position, [], 0];
+      [_source, _music, _radio, false] call grad_ambient_fnc_soundSourceHelper;
       
       {
         _x addCuratorEditableObjects [[_radio], false];

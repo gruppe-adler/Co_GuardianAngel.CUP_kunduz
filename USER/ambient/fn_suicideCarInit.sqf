@@ -29,8 +29,9 @@ _car setPilotLight false;
     ["rhs_Flag_Insurgents",[-0.582275,0.484619,1.26717],[[0,1,0],[0,0,1]]]
 ];
 
-private _source = createSoundSource ["prayer2", [0,0,0], [], 0];
-[_source, _car, false] call grad_ambient_fnc_soundSourceHelper;
+private _music = "prayer2";
+private _source = createSoundSource [_music, [0,0,0], [], 0];
+[_source, _music, _car, false] call grad_ambient_fnc_soundSourceHelper;
 
 /*
 {

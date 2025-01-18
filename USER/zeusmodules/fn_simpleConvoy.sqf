@@ -6,7 +6,7 @@ private _logicCenter = createCenter sideLogic;
 private _logicGroup = createGroup _logicCenter;
 private _convoy = _logicGroup createUnit ["Logic", [0,0,0], [], 0, "NONE"];
 _convoy setVariable ["maxSpeed", 50];
-_convoy setVariable ["convSeparation", 15];
+_convoy setVariable ["convSeparation", 30];
 _convoy setVariable ["stiffnessCoeff", 0.2];
 _convoy setVariable ["dampingCoeff", 0.6];
 _convoy setVariable ["curvatureCoeff", 0.3];

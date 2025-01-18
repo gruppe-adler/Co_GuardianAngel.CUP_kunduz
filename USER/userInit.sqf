@@ -112,4 +112,42 @@ if (isServer) then {
         }];
 
     } forEach (playableUnits + switchableUnits);
+
+
+    // make sure nothing inside a building survives destruction
+    addMissionEventHandler ["BuildingChanged", {
+        params ["_from", "_to", "_isRuin"];
+
+        private _buildingPos = getPosWorld _from;
+        private _boundingBox = boundingBoxReal _from;
+        _boundingBox params ["_p1", "_p2"];
+        
+        // Calculate the approximate area of the building
+        private _maxWidth = abs ((_p2 select 0) - (_p1 select 0));
+        private _maxLength = abs ((_p2 select 1) - (_p1 select 1));
+        private _maxHeight = abs ((_p2 select 2) - (_p1 select 2));
+
+        
+        // Find all objects near the building
+        private _objectsAround = nearestObjects [_buildingPos, [], _maxWidth max _maxLength];
+        
+        // Filter objects that are inside the building
+        private _objectsInsideBuilding = _objectsAround select {
+            _x inArea [_from, _maxWidth/2, _maxLength/2, getDir _from, true, _maxHeight] &&
+            {!(typeOf _x isKindOf "Man")} &&
+            {!(typeOf _x isKindOf "Car")} &&
+            {!(typeOf _x isKindOf "Tank")} &&
+            {!(typeOf _x isKindOf "Air")}
+        };
+
+        if (_isRuin) then {
+            {
+                if (_x != _to) then {
+                    _x hideObjectGlobal true;
+                };
+            } forEach _objectsInsideBuilding;
+        };
+    }];
 };
+
+
