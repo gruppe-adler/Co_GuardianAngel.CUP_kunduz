@@ -1,7 +1,7 @@
 private _duration = 45;
 
 // skiptime 3;
-
+/*
 introTexture attachTo [introtextureHolder]; introTexture setObjectScale 10;
 
 
@@ -13,10 +13,11 @@ _heli setCaptive true;
 _heli flyInHeight 40;
 (driver _heli) doMove [3571.52,5127.56, 50];
 _heli setSpeedMode "LIMITED";
+*/
 
+[objNull, _duration] remoteExec ["grad_intro_fnc_intro", 0, true];
 
-[_heli, _duration] remoteExec ["grad_intro_fnc_intro", 0, true];
-
+/*
 [{
     params ["_heli"];
 
@@ -24,3 +25,4 @@ _heli setSpeedMode "LIMITED";
     // skiptime -3;
     
 }, [_heli], _duration] call CBA_fnc_waitAndeXecute;
+*/

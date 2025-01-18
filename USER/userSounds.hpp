@@ -6,6 +6,41 @@
 #define VOLUME 4
 #define DISTANCE 15
 
+class radiomessage_start
+{
+	name	= "radiomessage_start";
+	sound[]	= {"\USER\sounds\radiomessage_start.ogg", 1, 1.0 };
+	titles[] = {};
+};
+
+class radiomessage0
+{
+	name	= "radiomessage0";
+	sound[]	= {"\USER\sounds\radiomessage0.ogg", 1, 1.0 };
+	titles[] = {};
+};
+
+class radiomessage1
+{
+	name	= "radiomessage1";
+	sound[]	= {"\USER\sounds\radiomessage1.ogg", 1, 1.0 };
+	titles[] = {};
+};
+
+class radiomessage2
+{
+	name	= "radiomessage2";
+	sound[]	= {"\USER\sounds\radiomessage2.ogg", 1, 1.0 };
+	titles[] = {};
+};
+
+class radiomessage3
+{
+	name	= "radiomessage3";
+	sound[]	= {"\USER\sounds\radiomessage3.ogg", 1, 1.0 };
+	titles[] = {};
+};
+
 class ied_countdown
 {
 	name	= "ied_countdown";

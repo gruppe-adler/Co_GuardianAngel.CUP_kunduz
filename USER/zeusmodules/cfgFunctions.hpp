@@ -19,5 +19,6 @@ class grad_zeusmodules {
         class simpleConvoy;
         class spawnVictim;
         class spawnVictimVehicleFX;
+        class fillAmmoBox;
     };
 };

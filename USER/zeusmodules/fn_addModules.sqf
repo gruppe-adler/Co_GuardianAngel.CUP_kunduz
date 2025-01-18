@@ -55,14 +55,6 @@
   } forEach allCurators;
 };
 
-
-["Guardian Angel - Mission Progress", "Blufor Convoy Spawn", {
-     params ["_position", "_object"];
-     
-     missionNameSpace setVariable ["grad_blufor_convoy", true, true];
-     
-}] call zen_custom_modules_fnc_register;
-
 ["Guardian Angel - Mission Progress", "Civ Convoy 1 Spawn", {
      params ["_position", "_object"];
      
@@ -76,6 +68,44 @@
      missionNameSpace setVariable ["grad_civ_convoy_2", true, true];
      
 }] call zen_custom_modules_fnc_register;
+
+["Guardian Angel - Mission Progress", "RadioMessage START - First task", {
+     params ["_position", "_object"];
+     
+     [[-1], "USER\intel\radioMessage.sqf"] remoteExec ["BIS_fnc_execVM"];
+     
+}] call zen_custom_modules_fnc_register;
+
+["Guardian Angel - Mission Progress", "RadioMessage 0 - German Convoy", {
+     params ["_position", "_object"];
+     
+     [[0], "USER\intel\radioMessage.sqf"] remoteExec ["BIS_fnc_execVM"];
+     missionNameSpace setVariable ["grad_blufor_convoy", true, true];
+     
+}] call zen_custom_modules_fnc_register;
+
+["Guardian Angel - Mission Progress", "RadioMessage 1 - Convoy ambushed", {
+     params ["_position", "_object"];
+     
+     [[1], "USER\intel\radioMessage.sqf"] remoteExec ["BIS_fnc_execVM"];
+     
+}] call zen_custom_modules_fnc_register;
+
+["Guardian Angel - Mission Progress", "RadioMessage 2 - Hostage coordinates", {
+     params ["_position", "_object"];
+     
+     [[2], "USER\intel\radioMessage.sqf"] remoteExec ["BIS_fnc_execVM"];
+     
+}] call zen_custom_modules_fnc_register;
+
+["Guardian Angel - Mission Progress", "RadioMessage 3 - Mission accomplished", {
+     params ["_position", "_object"];
+     
+     [[3], "USER\intel\radioMessage.sqf"] remoteExec ["BIS_fnc_execVM"];
+     
+}] call zen_custom_modules_fnc_register;
+
+
 
 
 ["Guardian Angel - Mission Progress", "Spawn Blufor Victim", {

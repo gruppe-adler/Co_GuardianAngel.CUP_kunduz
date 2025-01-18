@@ -148,6 +148,5 @@ if (isServer) then {
             };
         } forEach _objectsInsideBuilding;
     }];
+
 };
-
-
