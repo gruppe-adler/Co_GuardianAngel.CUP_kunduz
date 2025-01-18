@@ -118,6 +118,8 @@ if (isServer) then {
     addMissionEventHandler ["BuildingChanged", {
         params ["_from", "_to", "_isRuin"];
 
+        if !(_isRuin) exitWith {};
+
         private _buildingPos = getPosWorld _from;
         private _boundingBox = boundingBoxReal _from;
         _boundingBox params ["_p1", "_p2"];
@@ -140,13 +142,11 @@ if (isServer) then {
             {!(typeOf _x isKindOf "Air")}
         };
 
-        if (_isRuin) then {
-            {
-                if (_x != _to) then {
-                    _x hideObjectGlobal true;
-                };
-            } forEach _objectsInsideBuilding;
-        };
+        {
+            if (_x != _to) then {
+                _x hideObjectGlobal true;
+            };
+        } forEach _objectsInsideBuilding;
     }];
 };
 
