@@ -20,5 +20,6 @@ class grad_zeusmodules {
         class spawnVictim;
         class spawnVictimVehicleFX;
         class fillAmmoBox;
+        class artyFire;
     };
 };

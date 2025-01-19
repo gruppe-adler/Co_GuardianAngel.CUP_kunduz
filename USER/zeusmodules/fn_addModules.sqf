@@ -106,6 +106,14 @@
 }] call zen_custom_modules_fnc_register;
 
 
+["Guardian Angel - Mission Progress", "ArtyFire on this position", {
+          params ["_modulePosition", "_vehicle"];
+
+          [_modulePosition] remoteExec ["grad_zeusmodules_fnc_artyFire", 2];
+     }
+] call zen_custom_modules_fnc_register;
+
+
 
 
 ["Guardian Angel - Mission Progress", "Spawn Blufor Victim", {
