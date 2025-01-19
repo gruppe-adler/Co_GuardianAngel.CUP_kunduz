@@ -167,3 +167,97 @@ private _spawnIndexContainer = 0;
 	[_unitsFound, getPos obj_tangente_north] call grad_zeusmodules_fnc_simpleConvoy;	
 
 }, [_objects2, _groups2]] call CBA_fnc_waitUntilAndExecute;
+
+
+
+
+
+
+//// CIV CONVOY 3
+
+private _reinforcements3 = getMissionLayerEntities "grad_civ_convoy_3";
+_reinforcements3 params [["_objects3", []], ["_markers", []], ["_groups3", []]];
+
+private _spawnIndexContainer = 0;
+
+{ 
+	_x hideObjectGlobal true;
+} forEach _objects3;
+
+[{
+	params ["_objects", "_groups"];
+	missionNameSpace getVariable ["grad_civ_convoy_3", false]
+},{
+	params ["_objects", "_groups"];
+
+	// show all attached ladepritschen and their cargo
+	{
+		_x enableSimulationGlobal true;
+		_x hideObjectGlobal false;
+
+		{ 
+			_x hideObjectGlobal false;
+			{ _x hideObjectGlobal false; } forEach attachedObjects _x;
+		} forEach attachedObjects _x;
+	} forEach _objects;
+	
+	// sort leader to beginning
+	private _unitsFound = [];
+	{ 
+		private _index = _x getVariable ["grad_convoy_index", -1];
+		if (_index > -1) then {
+			_unitsFound set [_index, _x];
+		};
+	} forEach _objects;
+
+
+	[_unitsFound, getPos obj_tangente_north] call grad_zeusmodules_fnc_simpleConvoy;	
+
+}, [_objects3, _groups3]] call CBA_fnc_waitUntilAndExecute;
+
+
+
+
+
+
+//// CIV CONVOY 4
+
+private _reinforcements4 = getMissionLayerEntities "grad_civ_convoy_4";
+_reinforcements4 params [["_objects4", []], ["_markers", []], ["_groups4", []]];
+
+private _spawnIndexContainer = 0;
+
+{ 
+	_x hideObjectGlobal true;
+} forEach _objects4;
+
+[{
+	params ["_objects", "_groups"];
+	missionNameSpace getVariable ["grad_civ_convoy_4", false]
+},{
+	params ["_objects", "_groups"];
+
+	// show all attached ladepritschen and their cargo
+	{
+		_x enableSimulationGlobal true;
+		_x hideObjectGlobal false;
+
+		{ 
+			_x hideObjectGlobal false;
+			{ _x hideObjectGlobal false; } forEach attachedObjects _x;
+		} forEach attachedObjects _x;
+	} forEach _objects;
+	
+	// sort leader to beginning
+	private _unitsFound = [];
+	{ 
+		private _index = _x getVariable ["grad_convoy_index", -1];
+		if (_index > -1) then {
+			_unitsFound set [_index, _x];
+		};
+	} forEach _objects;
+
+
+	[_unitsFound, getPos obj_tangente_north] call grad_zeusmodules_fnc_simpleConvoy;	
+
+}, [_objects4, _groups4]] call CBA_fnc_waitUntilAndExecute;

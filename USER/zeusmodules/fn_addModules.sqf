@@ -69,6 +69,22 @@
      
 }] call zen_custom_modules_fnc_register;
 
+["Guardian Angel - Mission Progress", "Civ Convoy 3 Spawn", {
+     params ["_position", "_object"];
+     
+     missionNameSpace setVariable ["grad_civ_convoy_3", true, true];
+     
+}] call zen_custom_modules_fnc_register;
+
+["Guardian Angel - Mission Progress", "Civ Convoy 4 Spawn", {
+     params ["_position", "_object"];
+     
+     missionNameSpace setVariable ["grad_civ_convoy_4", true, true];
+     
+}] call zen_custom_modules_fnc_register;
+
+
+
 ["Guardian Angel - Mission Progress", "RadioMessage START - First task", {
      params ["_position", "_object"];
      
