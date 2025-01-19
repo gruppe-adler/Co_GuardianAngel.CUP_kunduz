@@ -29,7 +29,20 @@ switch (_messageCount) do {
 		playSound "radiomessage3";
 		_duration = 24;
 	};
+	case 4: { 
+		_message = "ANGEL for CROSSROAD. Enemy artillery targeting your position. Task: Identify origin and neutralize. Maintain caution. Report progress. Acknowledge and execute. CROSSROAD out.";
+		playSound "radiomessage6";
+		_duration = 14;
+	};
+	case 5: { 
+		_message = "ANGEL for CROSSROAD. Intel references a cave at Kar Shek with an SOS. Task: Investigate, confirm enemy presence or hostages. Proceed with caution. Report findings. Acknowledge and execute. CROSSROAD out.";
+		playSound "radiomessage7";
+		_duration = 17;
+	};
 	default { };
 };
 
-["CROSSROAD: " + _message, _duration, "TahomaB"] spawn GM_MISSIONS_fnc_rtty_text;
+[_message, _duration, "TahomaB"] spawn GM_MISSIONS_fnc_rtty_text;
+
+player creatediarysubject ["GUARDIAN ANGEL", "GUARDIAN ANGEL"];
+player createDiaryRecord ["GUARDIAN ANGEL", [str (_messageCount + 2) + " - " + ([daytime, "HH:MM"] call BIS_fnc_timeToString), _message]];

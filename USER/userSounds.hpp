@@ -41,6 +41,20 @@ class radiomessage3
 	titles[] = {};
 };
 
+class radiomessage6
+{
+	name	= "radiomessage6";
+	sound[]	= {"\USER\sounds\radiomessage6.ogg", 1, 1.0 };
+	titles[] = {};
+};
+
+class radiomessage7
+{
+	name	= "radiomessage7";
+	sound[]	= {"\USER\sounds\radiomessage7.ogg", 1, 1.0 };
+	titles[] = {};
+};
+
 class ied_countdown
 {
 	name	= "ied_countdown";
