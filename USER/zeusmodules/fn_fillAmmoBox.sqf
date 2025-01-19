@@ -1,16 +1,24 @@
 params ["_box"];
 
-if (!isServer) exitWith {};
+if (!isServer) exitWith {
+};
+
+clearWeaponCargoGlobal _box;
+clearItemCargoGlobal _box;
+clearBackpackCargoGlobal _box;
+clearMagazineCargoGlobal _box;
 
 // wait until players have received their loadout
 [{
+	params ["_box"];
+
 	private _magazines = [];
 	private _weapons = [];
 
 	{ 
 		private _player = _x; 
 
-		if (isNull getAssignedCuratorLogic _player) then {
+		// if (isNull getAssignedCuratorLogic _player) then {
 			private _loadout = getUnitLoadout _player; 
 			_loadout params ["_primaryArray", "_secondaryArray", "_pistolArray", ["_uniform", []], ["_vest", []], ["_backpack", []]];
 
@@ -32,9 +40,9 @@ if (!isServer) exitWith {};
 					private _number = -1;
 					{
 						_number = switch (_x) do {
-							case "HandGrenade" : 20;
-							case "CA_LauncherMagazine" : 5;
-							case "CA_Magazine" : 50;
+							case "HandGrenade" : {20};
+							case "CA_LauncherMagazine" : {5};
+							case "CA_Magazine" : {50};
 							default {-1};
 						};
 
@@ -44,7 +52,7 @@ if (!isServer) exitWith {};
 					_magazines pushBackUnique [_type, _number]; 
 				}; 
 			}forEach _container; 
-		};
+		// };
 	}forEach playableUnits + switchableUnits;
 
 	{
@@ -64,9 +72,9 @@ if (!isServer) exitWith {};
 			private _number = -1;
 			{
 				_number = switch (_x) do {
-					case "HandGrenade" : 20;
-					case "CA_LauncherMagazine" : 5;
-					case "CA_Magazine" : 50;
+					case "HandGrenade" : {20};
+					case "CA_LauncherMagazine" : {5};
+					case "CA_Magazine" : {50};
 					default {-1};
 				};
 
@@ -84,4 +92,4 @@ if (!isServer) exitWith {};
 	}forEach _magazines;
 
 
-}, [], 30] call CBA_fnc_waitAndExecute;
+}, [_box], 30] call CBA_fnc_waitAndExecute;
